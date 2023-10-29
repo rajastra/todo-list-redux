@@ -9,10 +9,13 @@ const initialState = {
 };
 
 // Thunk functions
-export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
-  const response = await axios.get(BASE_URL);
-  return response.data;
-});
+export const fetchTodos = createAsyncThunk(
+  'todos/fetchTodos',
+  async (completed = '') => {
+    const response = await axios.get(`${BASE_URL}?completed=${completed}`);
+    return response.data;
+  }
+);
 
 export const saveNewTodo = createAsyncThunk(
   'todos/saveNewTodo',
