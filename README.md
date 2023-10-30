@@ -10,6 +10,18 @@ clone the repo
 git clone
 ```
 
+move to the project directory
+
+```bash
+cd todo-list-redux
+```
+
+create a .env file from .env.example and add your api url
+
+```bash
+cp .env.example .env
+```
+
 install dependencies
 
 ```bash
@@ -20,12 +32,6 @@ run the app
 
 ```bash
 npm run dev
-```
-
-create a .env file from .env.example and add your api url
-
-```bash
-cp .env.example .env
 ```
 
 ## todo list field table
