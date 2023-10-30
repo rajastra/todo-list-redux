@@ -6,6 +6,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const initialState = {
   todos: [],
   status: 'idle',
+  selectedTodo: null,
 };
 
 // Thunk functions
@@ -45,19 +46,9 @@ const todoSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    todoAdded(state, action) {
+    todoSelected(state, action) {
       const todo = action.payload;
-      state.todos[todo.id] = todo;
-    },
-    todoToggled(state, action) {
-      const todoId = action.payload;
-      const todo = state.todos[todoId];
-      todo.completed = !todo.completed;
-    },
-    todoEdited(state, action) {
-      const { id, title } = action.payload;
-      const todo = state.todos[id];
-      todo.title = title;
+      state.selectedTodo = todo;
     },
   },
   extraReducers: (builder) => {
@@ -116,7 +107,7 @@ const todoSlice = createSlice({
   },
 });
 
-export const { todoAdded, todoToggled } = todoSlice.actions;
+export const { todoSelected } = todoSlice.actions;
 
 export const selectAllTodos = (state) => state.todos.todos;
 export const getTodosStatus = (state) => state.todos.status;
@@ -124,5 +115,12 @@ export const getCompletedTodos = (state) =>
   state.todos.todos.filter((todo) => todo.completed);
 export const getIncompleteTodos = (state) =>
   state.todos.todos.filter((todo) => !todo.completed);
+
+export const selectTodoById = (state, todoId) =>
+  state.todos.todos.find((todo) => todo.id === todoId);
+
+export const selectSelectedTodo = (state) => {
+  return state.todos.selectedTodo;
+};
 
 export default todoSlice.reducer;

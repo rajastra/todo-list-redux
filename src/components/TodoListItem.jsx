@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
-import { deleteTodo, updateTodo } from "../redux/todoSlice";
+import { deleteTodo, todoSelected, updateTodo } from "../redux/todoSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,6 +22,12 @@ function TodoListItem({ todo }) {
       ))
    }
 
+   const handleEdit = () => {
+      document.getElementById('my_modal_1').showModal()
+      dispatch(todoSelected(todo))
+
+   }
+
 
    return (
       <li className="flex items-center bg-white px-4 py-4 border border-b-2-gray-500 gap-5 text-lg">
@@ -37,17 +43,17 @@ function TodoListItem({ todo }) {
          </p>
          <button
             type="button"
+            className="text-gray-400 hover:text-blue-700"
+            onClick={handleEdit}
+         >
+            <FontAwesomeIcon icon={faEdit} />
+         </button>
+         <button
+            type="button"
             className="text-gray-400 hover:text-red-700"
             onClick={handleDelete}
          >
             <FontAwesomeIcon icon={faTrashAlt} />
-         </button>
-         <button
-            type="button"
-            className="text-gray-400 hover:text-blue-700"
-            onClick={() => console.log('Edit clicked')}
-         >
-            <FontAwesomeIcon icon={faEdit} />
          </button>
       </li>
    )

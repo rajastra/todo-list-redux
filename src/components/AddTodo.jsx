@@ -33,7 +33,7 @@ function AddTodo() {
             value={text}
             onChange={e => setText(e.target.value)}
          />
-         <button className={
+         <button type="button" className={
             `${btnStyles.base} ${text === '' || todosStatus === 'loading' ? btnStyles.disabled : 'bg-blue-500 text-white hover:bg-blue-600 transition-colors ease-in-out border-none'}`
          }
             onClick={
