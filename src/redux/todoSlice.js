@@ -20,8 +20,7 @@ export const fetchTodos = createAsyncThunk(
 export const saveNewTodo = createAsyncThunk(
   'todos/saveNewTodo',
   async (text) => {
-    const initialTodo = { text };
-    const response = await axios.post(BASE_URL, { initialTodo });
+    const response = await axios.post(BASE_URL, { title: text });
     return response.data;
   }
 );
@@ -35,7 +34,10 @@ export const deleteTodo = createAsyncThunk(
 );
 
 export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
-  const response = await axios.put(`${BASE_URL}/${todo.id}`, { todo });
+  const response = await axios.put(`${BASE_URL}/${todo.id}`, {
+    title: todo.title,
+    completed: todo.completed,
+  });
   return response.data;
 });
 
@@ -100,7 +102,12 @@ const todoSlice = createSlice({
       .addCase(updateTodo.fulfilled, (state, action) => {
         state.status = 'succeeded';
         const updatedTodo = action.payload;
-        state.todos[updatedTodo.id] = updatedTodo;
+        const index = state.todos.findIndex(
+          (todo) => todo.id === updatedTodo.id
+        );
+        if (index !== -1) {
+          state.todos[index] = updatedTodo;
+        }
       })
       .addCase(updateTodo.rejected, (state, action) => {
         state.status = 'failed';
