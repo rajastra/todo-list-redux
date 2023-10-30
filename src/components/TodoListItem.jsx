@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
-import { updateTodo } from "../redux/todoSlice";
+import { deleteTodo, updateTodo } from "../redux/todoSlice";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+
 
 function TodoListItem({ todo }) {
    const dispatch = useDispatch()
@@ -11,6 +14,12 @@ function TodoListItem({ todo }) {
          completed: !todo.completed
       })
       )
+   }
+
+   const handleDelete = () => {
+      dispatch(deleteTodo(
+         todo.id
+      ))
    }
 
 
@@ -26,12 +35,27 @@ function TodoListItem({ todo }) {
          >
             {todo.title}
          </p>
+         <button
+            type="button"
+            className="text-gray-400 hover:text-red-700"
+            onClick={handleDelete}
+         >
+            <FontAwesomeIcon icon={faTrashAlt} />
+         </button>
+         <button
+            type="button"
+            className="text-gray-400 hover:text-blue-700"
+            onClick={() => console.log('Edit clicked')}
+         >
+            <FontAwesomeIcon icon={faEdit} />
+         </button>
       </li>
    )
 }
 
 TodoListItem.propTypes = {
    todo: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
    }).isRequired,
