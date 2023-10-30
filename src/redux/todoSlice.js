@@ -107,7 +107,7 @@ const todoSlice = createSlice({
   },
 });
 
-export const { todoSelected } = todoSlice.actions;
+export const { todoSelected, filterTodos } = todoSlice.actions;
 
 export const selectAllTodos = (state) => state.todos.todos;
 export const getTodosStatus = (state) => state.todos.status;
